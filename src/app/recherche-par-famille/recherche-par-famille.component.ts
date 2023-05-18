@@ -13,6 +13,8 @@ export class RechercheParFamilleComponent {
   familles! : Famille[];
   parfums! : Parfum[];
   constructor(private parfumService : ParfumService) { }
+
+  
   ngOnInit(): void {
     this.parfumService.listeFamilles().
     subscribe(fams => {this.familles = fams._embedded.familles;

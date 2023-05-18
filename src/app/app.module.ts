@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ParfumsComponent } from './parfums/parfums.component';
@@ -15,6 +14,8 @@ import { ListeFamillesComponent } from './liste-familles/liste-familles.componen
 import { UpdateFamilleComponent } from './update-famille/update-famille.component';
 import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './services/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,10 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     HttpClientModule,
     Ng2SearchPipeModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{ provide : HTTP_INTERCEPTORS,
+    useClass : TokenInterceptor,
+    multi : true}
+     ],
+       bootstrap: [AppComponent]
 })
 export class AppModule { }

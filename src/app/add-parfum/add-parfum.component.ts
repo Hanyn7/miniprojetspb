@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Parfum } from '../model/parfum.model';
+import { Image } from '../model/image.model';
 import { ParfumService } from '../services/parfum.service';
 import { Famille } from '../model/famille.model';
 import { Router } from '@angular/router';
@@ -14,6 +15,8 @@ export class AddParfumComponent implements OnInit {
   familles! : Famille[];
   newIdFam! : number;
   newFamille! : Famille;
+  uploadedImage!: File;
+  imagePath: any;
 
 
   constructor(private parfumService: ParfumService,
@@ -26,15 +29,35 @@ export class AddParfumComponent implements OnInit {
       
       });
       }
-    
-        addParfum(){
-          this.newParfum.famille = this.familles.find(fam => fam.idFam == this.newIdFam)!;
-          this.parfumService.ajouterParfum(this.newParfum)
-          .subscribe(parf => {
-            console.log(parf);
+  
+          /*addParfum(){
+            this.parfumService.uploadImage(this.uploadedImage, this.uploadedImage.name).subscribe((img: Image) => {
+            this.newParfum.image=img;
+            this.newParfum.famille = this.familles.find(cat => cat.idFam== this.newIdFam)!;
+            this.parfumService.ajouterParfum(this.newParfum).subscribe(() => {
             this.router.navigate(['parfums']);
-          });
-          }
+            });
+            });
+            }*/
+            addParfum(){
+              this.newParfum.famille = this.familles.find(fam => fam.idFam == this.newIdFam)!;
+              this.parfumService
+              .ajouterParfum(this.newParfum)
+              .subscribe((prod) => {
+              this.parfumService
+              .uploadImageFS(this.uploadedImage,this.uploadedImage.name,prod.idParfum)
+              .subscribe((response: any) => {}
+              );
+              this.router.navigate(['parfums']);
+              });
+              }
+
+          onImageUpload(event: any) {
+            this.uploadedImage = event.target.files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(this.uploadedImage);
+            reader.onload = (_event) => { this.imagePath = reader.result; }
+            }
 
 }
 

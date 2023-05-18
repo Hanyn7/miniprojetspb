@@ -15,9 +15,9 @@ export class RechercheParNomComponent implements OnInit {
   constructor(private parfumService: ParfumService) { }
 
   ngOnInit(): void {
-    this.parfumService.listeParfum().subscribe(prods => {
-      console.log(prods);
-      this.parfums = prods;
+    this.parfumService.listeParfum().subscribe(parfs => {
+      console.log(parfs);
+      this.parfums = parfs;
     });
   }
 
@@ -26,7 +26,7 @@ export class RechercheParNomComponent implements OnInit {
     item.nomParfum.toLowerCase().includes(filterText));
     }
 
-  rechercherProds() {
+  rechercherParfs() {
     this.parfumService.rechercherParNom(this.nomParfum)
       .subscribe(parfs => {
         this.parfums = parfs; 

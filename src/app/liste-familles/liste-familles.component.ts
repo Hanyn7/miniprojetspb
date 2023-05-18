@@ -18,22 +18,28 @@ export class ListeFamillesComponent implements OnInit {
     console.log(fams);
     });
     }
-
-   familleUpdated(fam:Famille){
-      console.log("Fam updated event",fam);
-      this.parfumService.ajouterFamille(fam).
-       subscribe( ()=> this.chargerFamilles());
-      }
-      chargerFamilles(){
-        this.parfumService.listeFamilles().
-        subscribe(fams => {this.familles = fams._embedded.familles;
-        console.log(fams);
-        });
+      familleUpdated(fam:Famille){
+        console.log("Fam updated event",fam);
+        this.parfumService.ajouterFamille(fam).
+         subscribe( ()=> this.chargerFamilles());
         }
+    
+        chargerFamilles(){
+          this.parfumService.listeFamilles().
+          subscribe(fams => {this.familles = fams._embedded.familles;
+          console.log(fams);
+          });
+          }
+        
+            updateFam(fam:Famille) {
+              this.updatedFam=fam;
+              this.ajout=false;
+              }
+}
+
+
+   
 
         
-          updateFam(fam:Famille) {
-            this.updatedFam=fam;
-            this.ajout=false;
-            }
-}
+          
+

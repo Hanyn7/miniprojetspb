@@ -20,7 +20,6 @@ const routes: Routes = [
 {path: 'login', component: LoginComponent},
 {path: 'app-forbidden', component: ForbiddenComponent},
 
-
 { path: '', redirectTo: 'parfums', pathMatch: 'full' }
 ];
 
